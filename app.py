@@ -3,6 +3,10 @@ import streamlit as st
 from trocr import TROCR
 from paddle_ocr import PaddleOCRProcessor
 from utils import load_image, display_image
+from generate_kvp import loadChain, get_kvp
+
+# Load
+kvp_chain = loadChain()
 
 # Initialize the OCR models
 tocr_model = TROCR()  # TRocr
@@ -34,5 +38,10 @@ if uploaded_file is not None:
         # Display the extracted text
         st.subheader("Extracted Text:")
         st.text(extracted_text)
+
+        # extracted_text = {"extracted_text": extracted_text}
+        df = get_kvp(extracted_text=extracted_text, llm_chain=kvp_chain)
+        st.subheader('Key-Value Pair Table')
+        st.dataframe(df)
 else:
     st.info("Please upload an image to extract text.")

@@ -7,7 +7,7 @@ class PaddleOCRProcessor:
         # Initialize PaddleOCR with the desired configuration
         self.ocr = PaddleOCR(use_angle_cls=True, lang='en', use_gpu=use_gpu)
     
-    def extract_text(self, image: Image.Image) -> str:
+    def extract_text(self, image: Image) -> str:
         # Convert PIL image to format compatible with PaddleOCR
         image_path = "temp_image.png"
         image.save(image_path)
@@ -19,5 +19,7 @@ class PaddleOCRProcessor:
         extracted_text = ""
         for line in result:
             for word_info in line:
-                extracted_text += word_info[1][0] + " "
+                # print(word_info[1][0].replace(",", " "))
+                # word = word_info[1][0].replace(",", " ")
+                extracted_text += word_info[1][0] + "\n"
         return extracted_text.strip()
