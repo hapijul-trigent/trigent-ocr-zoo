@@ -1,0 +1,8 @@
+streamlit
+transformers
+torch
+Pillow
+paddlepaddle
+paddleocr
+pdf2image
+PyMuPDF
