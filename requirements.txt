@@ -6,3 +6,7 @@ paddlepaddle
 paddleocr
 pdf2image
 PyMuPDF
+langchain_core
+langchain_groq
+langchain
+langchain_community
