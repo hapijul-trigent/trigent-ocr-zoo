@@ -2,3 +2,5 @@ streamlit
 transformers
 torch
 Pillow
+paddlepaddle
+paddleocr
