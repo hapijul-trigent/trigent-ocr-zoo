@@ -60,7 +60,6 @@ def loadChain() -> str:
             max_tokens=None,
             timeout=None,
             max_retries=2,
-            api_key='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'
         )
 
         # Create the LLM chain
