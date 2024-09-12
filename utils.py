@@ -1,6 +1,8 @@
 # utils.py
 from PIL import Image, ImageEnhance
 import streamlit as st
+from trocr import TROCR
+from paddle_ocr import PaddleOCRProcessor
 
 def load_image(uploaded_file):
     try:
@@ -22,3 +24,11 @@ def preprocess_image(image):
 
 def display_image(image):
     st.image(image, caption="Uploaded Image", use_column_width=True)
+
+st.cache_resource(show_spinner=False)
+def load_trOCR():
+    return TROCR()  # TRocr
+
+st.cache_resource(show_spinner=False)
+def load_PaddleOCR():
+    return PaddleOCRProcessor()

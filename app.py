@@ -1,15 +1,17 @@
 # app.py
 import streamlit as st
-from trocr import TROCR
-from paddle_ocr import PaddleOCRProcessor
 from utils import load_image, display_image
 from generate_kvp import loadChain, get_kvp
+import logging
+from PIL import Image
+from utils import load_trOCR, load_PaddleOCR
+
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 # Set main panel
-favicon = Image.open("static/images/Trigent_Logo.png")
+favicon = Image.open("static/images/Trigent_Logo(1).png")
 st.set_page_config(
     page_title="Smart Motion Insights | Trigent AXLR8 Labs",
     page_icon=favicon,
@@ -36,11 +38,8 @@ st.divider()
 kvp_chain = loadChain()
 
 # Initialize the OCR models
-tocr_model = TROCR()  # TRocr
-paddle_ocr_model = PaddleOCRProcessor()  # PaddleOCR
-
-# Streamlit app title
-st.title("OCR Streamlit Application")
+tocr_model = load_trOCR()
+paddle_ocr_model = load_PaddleOCR()
 
 # User selects the OCR method
 ocr_option = st.selectbox("Select OCR Method:", ("TRocr", "PaddleOCR"))
