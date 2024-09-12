@@ -1,4 +1,3 @@
-# app.py
 import streamlit as st
 from utils import load_image, display_image
 from generate_kvp import loadChain, get_kvp
@@ -50,8 +49,10 @@ uploaded_file = st.file_uploader("Upload an image for OCR", type=["jpg", "png", 
 if uploaded_file is not None:
     # Load and display the image
     image = load_image(uploaded_file)
+    imagePreview, tablePreview = st.columns([3, 2])
     if image:
-        display_image(image)
+        with imagePreview:
+            display_image(image)
 
         # Perform OCR based on the selected option
         if ocr_option == "TRocr":
@@ -67,8 +68,10 @@ if uploaded_file is not None:
 
         # extracted_text = {"extracted_text": extracted_text}
         df = get_kvp(extracted_text=extracted_text, llm_chain=kvp_chain)
-        st.subheader('Key-Value Pair Table')
-        st.dataframe(df)
+
+        with tablePreview:
+            st.subheader('Key-Value Pair Table')
+            st.dataframe(df)
 else:
     st.info("Please upload an image to extract text.")
 
