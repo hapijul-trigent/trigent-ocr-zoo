@@ -4,6 +4,33 @@ from trocr import TROCR
 from paddle_ocr import PaddleOCRProcessor
 from utils import load_image, display_image
 from generate_kvp import loadChain, get_kvp
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+# Set main panel
+favicon = Image.open("static/images/Trigent_Logo.png")
+st.set_page_config(
+    page_title="Smart Motion Insights | Trigent AXLR8 Labs",
+    page_icon=favicon,
+    layout="wide",
+    initial_sidebar_state="collapsed",
+)
+
+# Add logo and title
+logo_path = "https://trigent.com/wp-content/uploads/Trigent_Axlr8_Labs.png"
+st.markdown(
+    f"""
+    <div style="text-align: center;">
+        <img src="{logo_path}" alt="Trigent Logo" style="max-width:100%;">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+# Main Page Title and Caption
+st.title("OCR Zoo")
+st.caption("Try out Various OCR models.")
+st.divider()
 
 # Load
 kvp_chain = loadChain()
@@ -45,3 +72,39 @@ if uploaded_file is not None:
         st.dataframe(df)
 else:
     st.info("Please upload an image to extract text.")
+
+
+# Footer with Font Awesome icons
+footer_html = """
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<div style="text-align: center; margin-right: 10%;">
+    <p>
+        &copy; 2024, Trigent Software Inc. All rights reserved. |
+        <a href="https://www.linkedin.com/company/trigent-software" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a> |
+        <a href="https://www.twitter.com/trigent-software" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a> |
+        <a href="https://www.youtube.com/trigent-software" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    </p>
+</div>
+"""
+# Custom CSS to make the footer sticky
+footer_css = """
+<style>
+.footer {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    color: black;
+    text-align: center;
+}
+[data-testid="stSidebarNavItems"] {
+    max-height: 100%!important;
+}
+</style>
+"""
+# Combining the HTML and CSS
+footer = f"{footer_css}<div class='footer'>{footer_html}</div>"
+# Rendering the footer
+st.markdown(footer, unsafe_allow_html=True)
